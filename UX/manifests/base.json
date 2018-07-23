@@ -1,0 +1,47 @@
+{
+    "manifestVersion": 1,
+    "id": "agile-insights",
+    "version": "1.0.30",
+    "publisher": "artevseev",
+    "name": "Agile Insights",
+    "description": "Machine learning based analytics system.",
+    "public": false,
+    "tags": [
+        "ML",
+        "Machine Learning",
+        "AI",
+		"Artificial intelligence",
+		"WIT",
+		"Work Item Tracking",
+		"Work Item",
+		"Sherlock"
+    ],
+    "scopes": [
+        "vso.work_write"
+    ],
+    "targets": [
+        {
+            "id": "Microsoft.VisualStudio.Services"
+        }
+    ],
+    "categories": [
+        "Plan and track"
+    ],
+    "contributions": [
+        {
+            "id": "sherlock",
+            "type": "ms.vss-web.action",
+            "targets": [
+                "ms.vss-work-web.work-item-toolbar-menu"
+            ],
+            "properties": {
+                "text": "Sherlock",
+                "title": "ms.vss-work-web.work-item-toolbar-menu",
+                "toolbarText": "Sherlock",
+                "icon": "images/Sherlock.png",
+                "group": "actions",
+                "uri": "index.html"
+			}
+        }
+    ]
+}
