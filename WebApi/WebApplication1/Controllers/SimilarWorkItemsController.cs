@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Net.Http;
-using System.Web.Http;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Net;
+using System.Net.Http;
+using System.Runtime.Serialization;
+using System.Web.Http;
 
 namespace WebApplication1.Controllers
 {
@@ -65,5 +66,23 @@ namespace WebApplication1.Controllers
     public class Request
     {
         public string text { get; set; }
+    }
+
+    [DataContract]
+    public class WorkItemPrediction
+    {
+
+        [DataMember]
+        public int workitemid;
+
+        [DataMember]
+        public float probability;
+    }
+
+    [DataContract]
+    public class WorkItemPredictions
+    {
+        [DataMember]
+        public IEnumerable<WorkItemPrediction> predictions;
     }
 }
