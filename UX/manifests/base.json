@@ -1,7 +1,7 @@
 {
     "manifestVersion": 1,
     "id": "agile-insights",
-    "version": "1.0.30",
+    "version": "1.0.80",
     "publisher": "artevseev",
     "name": "Agile Insights",
     "description": "Machine learning based analytics system.",
@@ -42,6 +42,15 @@
                 "group": "actions",
                 "uri": "index.html"
 			}
-        }
+        },
+		{
+            "id": "sherlock-form-content",
+            "type": "ms.vss-web.control",
+            "description": "The form content.",
+            "targets": [],
+            "properties": {
+                "uri": "scripts/sherlock-form-content.html"
+            }
+        }		
     ]
 }

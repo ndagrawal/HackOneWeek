@@ -26,19 +26,12 @@ if (isBundled) {
     <link href="css/fabric.min.css" rel="stylesheet" />
     <link href="css/main.css" rel="stylesheet" />
     <script src="scripts/VSS.SDK.min.js"></script>
+	<link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-js/1.2.0/css/fabric.min.css" />
+	<link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-js/1.2.0/css/fabric.components.min.css" />
+	<script src="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-js/1.2.0/js/fabric.min.js"></script>	
     `;
 
-    templateValues.init = `
-        VSS.init({
-            usePlatformScripts: true, 
-            usePlatformStyles: true
-        });
-
-        VSS.require(["scripts/bundle"], function (Bundle) {
-            Bundle.init("work-item-search-view");
-        });    
-		VSS.notifyLoadSucceeded();
-    `;
+    templateValues.init = ``;
 }
 else {
     templateValues.head = `
@@ -47,27 +40,7 @@ else {
     <script src="node_modules/vss-web-extension-sdk/lib/VSS.SDK.js"></script>
     `;
 
-    templateValues.init = `
-        VSS.init({
-            usePlatformScripts: true, 
-            usePlatformStyles: true,
-            moduleLoaderConfig: {
-                paths: {
-                    "OfficeFabric": "node_modules/office-ui-fabric-react/lib-amd",
-                    "@microsoft/load-themed-styles": "node_modules/office-ui-fabric-react/node_modules/@microsoft/load-themed-styles/lib-amd/index",
-                    "tslib": "node_modules/office-ui-fabric-react/node_modules/tslib/tslib",
-                    "prop-types": "node_modules/office-ui-fabric-react/node_modules/prop-types/prop-types",
-                    "glamor": "node_modules/office-ui-fabric-react/node_modules/@uifabric/styling/node_modules/glamor/umd/index",
-                    "rtl-css-js": "node_modules/office-ui-fabric-react/node_modules/@uifabric/styling/node_modules/rtl-css-js/dist/index.umd"
-                }
-            }
-        });
-
-        VSS.require(["scripts/WorkItemSearchComponent"], function (WorkItemSearchComponent) {
-            WorkItemSearchComponent.init("work-item-search-view");
-        });    
-		VSS.notifyLoadSucceeded();
-    `;
+    templateValues.init = ``;
 }
 
 gulp.task('template', () => {
@@ -93,7 +66,10 @@ gulp.task('copy', ['build'], () => {
         gulp.src('node_modules/vss-web-extension-sdk/lib/VSS.SDK.min.js')
             .pipe(gulp.dest(contentFolder + '/scripts'));
 
-        gulp.src('images/Sherlock.png')
+        gulp.src('scripts/*.html')
+            .pipe(gulp.dest(contentFolder + '/scripts'));
+			
+        gulp.src('images/*.png')
             .pipe(gulp.dest(contentFolder + '/images'));
 			
         return gulp.src(['node_modules/office-ui-fabric-react/dist/*css/*.min.css', '*css/*.css'])
@@ -104,14 +80,7 @@ gulp.task('copy', ['build'], () => {
 });
 
 gulp.task('webpack', ['copy'], () => {
-    if (isBundled) {
-        return gulp.src('./scripts/WorkItemSearchComponent.js')
-            .pipe(webpack(require('./webpack.config.js')))
-            .pipe(gulp.dest(contentFolder + "/scripts"));
-
-    } else {
-        return true;
-    }
+	return true;
 });
 
 gulp.task('tfxpack', ['webpack'], ()=> {

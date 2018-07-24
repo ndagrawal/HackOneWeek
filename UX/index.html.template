@@ -12,13 +12,53 @@
 
 </head>
 
-<body class="my-extension">
-    <script type="text/javascript">
-        <%= init %>
-    </script>
+<body class="sherlock-extension">
 
-    <h2>Work Item Search</h2>
-    <div id="work-item-search-view"></div>
+    <script type="text/javascript">
+
+    VSS.init();
+        var sherlockMenu = {
+            execute: function (actionContext) {
+                
+                VSS.getService(VSS.ServiceIds.Dialog).then(function (dialogSvc) {
+                
+                    var compareToForm;
+                
+                    var extInfo = VSS.getExtensionContext();
+                    
+                    var dialogOptions = {
+                        title: "See smart suggestings as we sherlock your work item",
+                        width: 600,
+                        height: 500,
+						buttons: []
+                    };
+                    
+                    var contributionContext = {
+                        item: actionContext  
+                    };
+                    
+                    dialogSvc.openDialog(extInfo.publisherId + "." + extInfo.extensionId + "." + "sherlock-form-content", dialogOptions, contributionContext).then(function (dialog) {
+                        dialog.getContributionInstance("sherlock-form-content").then(function (sherlockFormInstance) {
+                            
+                            /*compareToForm = compareToFormInstance;
+                            
+                            // Subscribe to form input changes and update the Ok enabled state
+                            compareToForm.onFormChanged(function(formInput) {
+                                dialog.updateOkButton(formInput.branch && actionContext.version !== "GB" + formInput.branch);
+                            });
+                            
+                            // Get the initial ok enabled state
+                            compareToForm.getFormInput().then(function (formInput) {
+                                dialog.updateOkButton(formInput.branch && actionContext.version !== "GB" + formInput.branch);
+                            }); */
+                        });
+                    });
+                });
+            }
+        };
+        
+        VSS.register("sherlock", sherlockMenu);    
+    </script>
 </body>
 
 </html>
