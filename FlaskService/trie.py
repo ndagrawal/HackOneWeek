@@ -1,11 +1,7 @@
-
-
 class TrieNode :
     def __init__(self):
         self.children = {}
-        self.label = -1;
-        self.isLeaf = False;
-
+        self.isLeaf = False
 
 class Trie:
     def __init__(self):
@@ -14,7 +10,9 @@ class Trie:
     def insert(self, word):
         current = self.root
         length = len(word)
-        for i in range(length-1):
+        for i in range(length):
+            if i == length-2:
+                continue
             ch = word[i]
             if ch in current.children:
                 node = current.children[ch]
@@ -22,13 +20,12 @@ class Trie:
                 node = TrieNode()
                 current.children[ch] = node
             current = node
-        current.label = word[length-1]
         current.isLeaf = True
 
     def searchTrie(self, word):
         current = self.root
         length = len(word)
-        for i in range(length-1):
+        for i in range(length):
             ch = word[i]
             if current.children[ch] is None:
                 return False
@@ -36,7 +33,7 @@ class Trie:
             current = current.children[ch]
         return True
 
-    def buildchildhierarchy(self):
+    def buildclasshierarchy(self):
         class_hierarchy = {}
         current = self.root
         self.dfs(class_hierarchy, current)
@@ -44,6 +41,8 @@ class Trie:
 
     def dfs(self, class_hierarchy, current):
         for childkey, relatednode in current.children.items():
+            if relatednode.isLeaf:
+                return
             class_hierarchy[childkey] = relatednode.children.keys()
             self.dfs(class_hierarchy, relatednode)
 
@@ -55,6 +54,7 @@ if __name__ == '__main__':
     trie.insert(word)
     trie.insert(word2)
     trie.insert(word3)
-    class_hierarchy = trie.buildchildhierarchy()
+    class_hierarchy = trie.buildclasshierarchy()
     for key, value in class_hierarchy.items():
         print(key, value)
+
