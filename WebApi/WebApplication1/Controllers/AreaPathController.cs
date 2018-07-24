@@ -13,11 +13,11 @@ namespace WebApplication1.Controllers
         // POST: api/AreaPath
         public AreaPathPredictions Post(Request value)
         {
-            //var response = new HttpClient().PostAsJsonAsync("http://localhost:5000/areapath", value).Result;
-            //var json = response.Content.ReadAsStringAsync().Result;
-            //var result = JsonConvert.DeserializeObject<Response>(json);
-
-            return GetDummyResponse();
+            var response = new HttpClient().PostAsJsonAsync("http://localhost:5000/area", value).Result;
+            var json = response.Content.ReadAsStringAsync().Result;
+            var result = JsonConvert.DeserializeObject<AreaPathPredictions>(json);
+            return result;
+            //return GetDummyResponse();
         }
 
 
@@ -32,26 +32,20 @@ namespace WebApplication1.Controllers
             {
                 predictions = new List<AreaPathPrediction>
                 {
-                    new AreaPathPrediction{areapath="VSOnline/sample", probability=0.95f},
-                    new AreaPathPrediction{areapath="VSOnline/sample", probability=0.95f},
-                    new AreaPathPrediction{areapath="VSOnline/sample", probability=0.95f}
+                    //new AreaPathPrediction{areapathname="VSOnline/sample", probability=0.95f},
+                    //new AreaPathPrediction{areapath="VSOnline/sample", probability=0.95f},
+                    //new AreaPathPrediction{areapath="VSOnline/sample", probability=0.95f}
                 }
             };
         }
     }
 
-    [DataContract]
-    public class AreaPathResponse
-    {
-        [DataMember]
-        public string area { get; set; }
-    }
-
+    
     [DataContract]
     public class AreaPathPrediction
     {
         [DataMember]
-        public string areapath;
+        public string areapathname;
 
         [DataMember]
         public float probability;
